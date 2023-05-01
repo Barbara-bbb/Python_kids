@@ -1,0 +1,97 @@
+# Open https://jupyter.org/try-jupyter/lab/ using Google Chrome. Open Notebook with Python.
+# In a new file, copy-paste the following code and run it.
+
+print("Warm up - Python basics")
+
+# NumPy array (vectors)
+import numpy as np
+a=np.array([0.4,1.1,2.9,3.7,4.3], dtype = float)
+# a2=np.array([0,1,2,3,4])
+print(a)
+a[0]
+print(a[0])
+
+mean = np.mean(a)
+print('mean:', mean)
+    
+b=np.array([[0,1,2,3,4],[2,2,2,2,2]])
+print('b:',b)
+
+# Cast ditionary to Pandas data frame
+dictionary={'Adventure': (110,103), 'Psychology':(105,101)}
+print(dictionary)
+s=dictionary['Adventure']
+print('s:', s)
+s2=dictionary.keys ()
+print('s2:', s2)
+s3=dictionary.values ()
+print('s3:', s3)
+
+# Pandas data frames
+import pandas as pd
+dictionary_df = pd.DataFrame(dictionary)
+print( dictionary_df)
+
+# Function
+def add1(t):
+    b=t+1
+    return b
+print('Output of function with a= 4:')
+print(add1(4))
+
+# For loop (remember about indent and writing semicolon :)
+for i in a:
+    print('For loop output:')
+    print(i)
+ 
+ # Plotting
+import matplotlib.pylab as plt
+x=np.array([0.4,1.1,2.9,3.7,4.3], dtype = float)
+# ** is power operator
+y= 2 * x + 10 ** x
+plt.scatter(x,y)
+
+plt.title ('Scatter plot')
+plt.xlabel ('x')
+plt.ylabel ('y')
+
+   
+# Working with data frame
+csv_path = 'data/iris.csv'
+df = pd.read_csv(csv_path)
+print(df.head())
+print(df.tail())
+
+# Get statistics of data frame
+print(df.describe())
+
+mean = df['sepal_length'].mean()
+print('avg sepal length:', mean)
+
+df.rename(columns ={'sepal_length':'sepal_length_A'}, inplace = True)
+print(df.head())
+
+# Find unique species names
+print('unique species:')
+print(df['species'].unique())
+
+# Group by: get an average of 'sepal_length_A', 'sepal_width', 'petal_length', 'petal_width' for each group of species
+df_grb = df.groupby(['species'], as_index=False).mean()
+print(df_grb)
+
+# Value_counts: how many values are there for each 'species'?
+df_value_counts = df['species'].value_counts()
+print(df_value_counts)
+
+# Merge data frame adding one more column 
+column_z = np.array(range(0,150))
+    #convert numPy array to Pandas data frame
+column_z= pd.DataFrame(column_z)
+    #merge
+df_merge = pd.concat([df, column_z], axis=1)
+print(df_merge.head())
+
+# Create manually headers and replace existing headers names 
+headers = ['sepal_length',  'sepal_width' , 'petal_length',  'petal_width',  'species', 'index']
+df_merge.columns = headers
+df_merge.head(10)
