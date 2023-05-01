@@ -1,0 +1,66 @@
+# Problem description: non-linear regression analysis in Python, using two methods for verification, utilizing Machine Learning.
+
+# Open https://jupyter.org/try-jupyter/lab/ using Google Chrome. Open Notebook with Python.
+# In a new file, copy-paste the following code and run it. Pls wait a few seconds to get the output. 
+
+# 1. Non-linear regression example
+
+print('1. Non-linear regression in Python:')
+
+# Import libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pylab as plt
+
+# Plotting
+x = np.arange (-10.0, 10.0, 0.8)
+# ** is the power operator
+y = 10 * x +  x ** 2 
+y_noise = 10 * np.random.normal (size = x.size)
+y_data = y + y_noise
+
+plt.plot(x, y_data, 'bo')
+plt.plot(x, y,'r')
+plt.title ('Non-linear regression in Python')
+plt.xlabel ('Independent variable')
+plt.ylabel ('Dependent variable')
+plt.show()
+
+# Accuracy of model
+print("Mean absolute error: %.2f" % np.mean(np.absolute(y - y_data)))
+print("Residual sum of squares (MSE): %.2f" % np.mean((y - y_data) ** 2))
+# Ideal MSE = 0. Interpret MSE: https://stephenallwright.com/interpret-mse/
+
+from sklearn.metrics import r2_score 
+print("R2-score: %.2f" % r2_score(y_data,y))
+# Ideal R2 = 1.
+
+
+# 2. The same example as above, solved using Polynomial Regression (function .polyfit) for verification
+
+print('')
+print('2. Problem solved using Polynomial Regression (function .polyfit) for verification:')
+print('')
+
+f=np.polyfit (x, y_data, 2)
+p=np.poly1d(f)   # polynomial equation
+print('Equation of predicted model:')
+print(p)
+
+
+def PlotPolly (model, independent_variable, dependent_variable, Name):
+    x_new = np.arange (-10.0, 10.0, 0.8)
+    y_new = model (x_new)
+    
+    plt.plot(independent_variable, dependent_variable,'.',x_new,y_new,'-')
+    plt.title('Polynomial Fit with Matplotlib for y-x')
+    ax=plt.gca()
+    ax.set_facecolor((0.898, 0.898, 0.898))
+    fig=plt.gcf()
+    plt.xlabel(Name)
+    plt.ylabel('y')
+    plt.show()
+    plt.close()
+
+PlotPolly(p, x, y_data, 'x')
+np.polyfit(x,y_data,2)
